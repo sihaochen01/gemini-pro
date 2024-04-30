@@ -46,8 +46,8 @@ async function _translate(text: string, options: QueryOption = {}): Promise<Bob.
       var historyMessage = readFile(historyFileName).concat([requestContent]);
       var requestContents = {'contents': historyMessage}
       var baseURL = $option.baseurl;
-      var apiKey = '?key='+$option.apiKey;
-      var requestUrl = baseURL +apiKey;
+      var apiKey = '?key=' + $option.apiKey;
+      var requestUrl = baseURL + apiKey;
       const timeoutConfig = 1000;
       const requestHeader = {"Content-Type": "application/json"};
 
@@ -66,21 +66,21 @@ async function _translate(text: string, options: QueryOption = {}): Promise<Bob.
       if (res?.response.statusCode !== 200) throw Bob.util.error('api', '接口响应状态错误', err);
       if (err) throw Bob.util.error('api', '接口网络错误', err);
 
-     /* Sample request JSon object content
-      '{
-            "contents": [
-              {"role":"user",
-               "parts":[{
-                 "text": "Write the first line of a story about a magic backpack."}]},
-              {"role": "model",
-               "parts":[{
-                 "text": "In the bustling city of Meadow brook, lived a young girl named Sophie. She was a bright and curious soul with an imaginative mind."}]},
-              {"role": "user",
-               "parts":[{
-                 "text": "Can you set it in a quiet village in 1600s France?"}]},
-            ]
-          }'
-    */
+      /* Sample request JSon object content
+       '{
+             "contents": [
+               {"role":"user",
+                "parts":[{
+                  "text": "Write the first line of a story about a magic backpack."}]},
+               {"role": "model",
+                "parts":[{
+                  "text": "In the bustling city of Meadow brook, lived a young girl named Sophie. She was a bright and curious soul with an imaginative mind."}]},
+               {"role": "user",
+                "parts":[{
+                  "text": "Can you set it in a quiet village in 1600s France?"}]},
+             ]
+           }'
+     */
       const chatResult = res?.data.candidates[0].content.parts[0].text;
       result.toParagraphs = [chatResult];
 
