@@ -83,11 +83,11 @@
       "type": "text",
       "title": "API KEY",
       "desc": "API key from https://aistudio.google.com/app/apikey (必填项)",
-      "defaultValue": "AIzaSyD9rDAGwJDmG1TuaLt5j7MdonFxou01WsI",
+      "defaultValue": "Google Gemini API KEY",
       "textConfig": {
         "type": "visible",
         "height": "80",
-        "placeholderText": "AIzaSyD9rDAGwJDmG1TuaLt5j7MdonFxou01WsI"
+        "placeholderText": "Google Gemini API KEY"
       }
     }
   ]
