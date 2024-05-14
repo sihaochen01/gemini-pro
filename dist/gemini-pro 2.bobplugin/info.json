@@ -27,22 +27,6 @@
       ]
     },
     {
-      "identifier": "connectionMode",
-      "type": "menu",
-      "title": "模式",
-      "defaultValue": "nas",
-      "menuValues": [
-        {
-          "title": "Gemini URL",
-          "value": "genimiurl"
-        },
-        {
-          "title": "NAS",
-          "value": "nas"
-        }
-      ]
-    },
-    {
       "identifier": "baseurl",
       "type": "text",
       "title": "Base URL",
@@ -55,37 +39,15 @@
       }
     },
     {
-      "identifier": "nasConfig",
-      "type": "text",
-      "title": "NAS服务",
-      "desc": "Please enter the NAS docker url here",
-      "defaultValue": "http://localhost:8082/gemini",
-      "textConfig": {
-        "type": "visible",
-        "height": "80",
-        "placeholderText": "http://localhost:8082/gemini"
-      }
-    },
-    {
-      "identifier": "nasProfile",
-      "type": "text",
-      "title": "NAS用户",
-      "desc": "Please enter the NAS docker service profile name",
-      "defaultValue": "Bob",
-      "textConfig": {
-        "type": "visible",
-        "height": "80",
-        "placeholderText": "Bob"
-      }
-    },
-    {
       "identifier": "apiKey",
       "type": "text",
       "title": "API KEY",
       "desc": "API key from https://aistudio.google.com/app/apikey (必填项)",
+      "defaultValue": "AIzaSyAxLrc7ShNeGvq79o-JksGzgoivcMOTIqc",
       "textConfig": {
         "type": "visible",
         "height": "80",
+        "placeholderText": "AIzaSyAxLrc7ShNeGvq79o-JksGzgoivcMOTIqc"
       }
     }
   ]

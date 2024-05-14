@@ -413,75 +413,56 @@ function _translate2() {
       toParagraphs: []
     };
     try {
-      var connectionMode = $option.connectionMode;
-      var timeoutConfig = 1e3;
-      var requestHeader = {
-        "Content-Type": "application/json"
-      };
-      if (connectionMode === "genimiurl") {
-        if (text.toUpperCase() === newConversationTriggerWord) {
-          deleteFile(historyFileName);
-          result.toParagraphs = [startNewConversation];
-        } else {
-          var baseURL = $option.baseurl;
-          var apiKey = "?key=" + $option.apiKey;
-          var requestUrl = baseURL + apiKey;
-          var requestText = {
-            "text": text
-          };
-          var parts = [requestText];
-          var requestContent = {
-            parts,
-            "role": chatGPTUserRole
-          };
-          var historyMessage = readFile(historyFileName).concat([requestContent]);
-          var requestContents = {
-            "contents": historyMessage
-          };
-          var [err, res] = yield util.asyncTo(api.$http.post({
-            url: requestUrl,
-            timeout: timeoutConfig,
-            header: requestHeader,
-            body: requestContents
-          }));
-          if ((res === null || res === void 0 ? void 0 : res.response.statusCode) == 400)
-            throw util.error("api", "Something really wrong", err);
-          if ((res === null || res === void 0 ? void 0 : res.response.statusCode) !== 200)
-            throw util.error("api", "\u63A5\u53E3\u54CD\u5E94\u72B6\u6001\u9519\u8BEF", err);
-          if (err)
-            throw util.error("api", "\u63A5\u53E3\u7F51\u7EDC\u9519\u8BEF", err);
-          var chatResult = res === null || res === void 0 ? void 0 : res.data.candidates[0].content.parts[0].text;
-          result.toParagraphs = [chatResult];
-          var resultText = {
-            "text": chatResult
-          };
-          var parts = [resultText];
-          var resultContent = {
-            parts,
-            "role": chatGPTAssistantRole
-          };
-          historyMessage.push(resultContent);
-          writeFile({
-            value: historyMessage,
-            fileName: historyFileName
-          });
-        }
+      if (text.toUpperCase() === newConversationTriggerWord) {
+        deleteFile(historyFileName);
+        result.toParagraphs = [startNewConversation];
       } else {
-        var nasDockerUrl = $option.nasConfig;
-        var nasDockerServiceProfile = $option.nasProfile;
-        var nasModeRequest = nasDockerUrl + "?identifier=" + nasDockerServiceProfile + "&prompt=" + encodeURI(text);
-        var [_err, _res] = yield util.asyncTo(api.$http.post({
-          url: nasModeRequest,
-          timeout: timeoutConfig
+        var requestText = {
+          "text": text
+        };
+        var parts = [requestText];
+        var requestContent = {
+          parts,
+          "role": chatGPTUserRole
+        };
+        var historyMessage = readFile(historyFileName).concat([requestContent]);
+        var requestContents = {
+          "contents": historyMessage
+        };
+        var baseURL = $option.baseurl;
+        var apiKey = "?key=" + $option.apiKey;
+        var requestUrl = baseURL + apiKey;
+        var timeoutConfig = 1e3;
+        var requestHeader = {
+          "Content-Type": "application/json"
+        };
+        var [err, res] = yield util.asyncTo(api.$http.post({
+          url: requestUrl,
+          timeout: timeoutConfig,
+          header: requestHeader,
+          body: requestContents
         }));
-        if ((_res === null || _res === void 0 ? void 0 : _res.response.statusCode) == 400)
-          throw util.error("api", "Something really wrong", _err);
-        if ((_res === null || _res === void 0 ? void 0 : _res.response.statusCode) !== 200)
-          throw util.error("api", "\u63A5\u53E3\u54CD\u5E94\u72B6\u6001\u9519\u8BEF", _err);
-        if (_err)
-          throw util.error("api", "\u63A5\u53E3\u7F51\u7EDC\u9519\u8BEF", _err);
-        var _chatResult = _res === null || _res === void 0 ? void 0 : _res.data;
-        result.toParagraphs = [_chatResult];
+        if ((res === null || res === void 0 ? void 0 : res.response.statusCode) == 400)
+          throw util.error("api", "Something really wrong", err);
+        if ((res === null || res === void 0 ? void 0 : res.response.statusCode) !== 200)
+          throw util.error("api", "\u63A5\u53E3\u54CD\u5E94\u72B6\u6001\u9519\u8BEF", err);
+        if (err)
+          throw util.error("api", "\u63A5\u53E3\u7F51\u7EDC\u9519\u8BEF", err);
+        var chatResult = res === null || res === void 0 ? void 0 : res.data.candidates[0].content.parts[0].text;
+        result.toParagraphs = [chatResult];
+        var resultText = {
+          "text": chatResult
+        };
+        var parts = [resultText];
+        var resultContent = {
+          parts,
+          "role": chatGPTAssistantRole
+        };
+        historyMessage.push(resultContent);
+        writeFile({
+          value: historyMessage,
+          fileName: historyFileName
+        });
       }
       result.fromParagraphs = [text];
     } catch (error) {
